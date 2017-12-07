@@ -1,0 +1,13 @@
+# {{ ansible_managed }}
+{% if saltstack_master_configuration is defined and saltstack_master_configuration != [] %}
+{%   for key, value in saltstack_master_configuration.items()|sort %}
+{%     if value and (value is not iterable or value is string) %}
+{{ key }}: {{ value }}
+{%     elif value is iterable and value is not string and value != [] %}
+{{ key }}:
+{%       for _value in value %}
+  - {{ _value }}
+{%       endfor %}
+{%     endif %}
+{%   endfor %}
+{% endif %}

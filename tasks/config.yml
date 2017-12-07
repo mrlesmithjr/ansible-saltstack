@@ -1,0 +1,19 @@
+---
+- name: config | Configuring Salt Master
+  template:
+    src: etc/salt/master.j2
+    dest: "{{ saltstack_master_configuration['conf_file']|default('/etc/salt/master') }}"
+  become: true
+  notify: restart salt-master
+  when: inventory_hostname == saltstack_master
+
+- name: config | Configuring Salt Minion
+  template:
+    src: etc/salt/minion.j2
+    dest: "{{ saltstack_minion_configuration['conf_file']|default('/etc/salt/minion') }}"
+  become: true
+  notify: restart salt-minion
+  when: inventory_hostname != saltstack_master
+
+- name: config | Flushing Any Handlers Immediately
+  meta: flush_handlers

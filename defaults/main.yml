@@ -1,0 +1,84 @@
+---
+# defaults file for ansible-saltstack
+saltstack_bind_interface: enp0s8
+
+saltstack_master_configuration: []
+  # auto_accept: False
+  # cachedir: /var/cache/salt/master
+  # conf_file: /etc/salt/master
+  # default_include: master.d/*.conf
+  # extension_modules: /var/cache/salt/master/extmods
+  # gather_job_timeout: 10
+  # interface: 0.0.0.0
+  # ipv6: False
+  # keep_jobs: 24
+  # keysize: 2048
+  # loop_interval: 60
+  # # module_dirs: []
+  # output_file: None
+  # output: nested
+  # # outputter_dirs: []
+  # pidfile: /var/run/salt-master.pid
+  # pki_dir: /etc/salt/pki/master
+  # publish_port: 4505
+  # ret_port: 4506
+  # root_dir: /
+  # ssh_identities_only: False
+  # ssh_log_file: /var/log/salt/ssh
+  # # ssh_passwd: ''
+  # ssh_port: 22
+  # ssh_scan_ports: 22
+  # ssh_scan_timeout: 0.01
+  # ssh_sudo: False
+  # ssh_timeout: 60
+  # ssh_use_home_key: False
+  # # ssh_user: root
+  # tcp_keepalive_cnt: -1
+  # tcp_keepalive_idle: 300
+  # tcp_keepalive_intvl: -1
+  # tcp_keepalive: True
+  # timeout: 5
+  # token_expire: 43200
+  # user: root
+  # verify_env: True
+  # worker_threads: 5
+
+saltstack_minion_configuration: []
+  # cachedir: /var/cache/salt/minion
+  # conf_file: /etc/salt/minion
+  # default_include: minion.d/*.conf
+  # # disable_modules:
+  # #   - cmdmod
+  # #   - test
+  # ipv6: False
+  # master_alive_interval: 30
+  # master_port: 4506
+  # master_shuffle: False
+  # master: "{{ hostvars[saltstack_master]['ansible_' + saltstack_bind_interface]['ipv4']['address'] }}"
+  # pidfile: /var/run/salt-minion.pid
+  # pki_dir: /etc/salt/pki/minion
+  # # proxy_host:
+  # # proxy_password:
+  # # proxy_port:
+  # # proxy_username:
+  # random_master: False
+  # retry_dns: 30
+  # root_dir: /
+  # sudo_user: root
+  # tcp_keepalive_cnt: -1
+  # tcp_keepalive_idle: 300
+  # tcp_keepalive_intvl: -1
+  # tcp_keepalive: True
+  # user: root
+  # verify_env: True
+
+saltstack_debian_repo_info:
+  key: "https://repo.saltstack.com/apt/{{ ansible_distribution|lower }}/{{ ansible_distribution_version }}/amd64/latest/SALTSTACK-GPG-KEY.pub"
+  repo: "deb http://repo.saltstack.com/apt/{{ ansible_distribution|lower }}/{{ ansible_distribution_version }}/amd64/latest {{ ansible_distribution_release|lower }} main"
+
+# Defines the Ansible group which contains the Salt nodes
+saltstack_group: salt
+
+saltstack_master: "{{ groups[saltstack_group][0] }}"
+
+saltstack_master_ip: "{{ hostvars[saltstack_master]['ansible_' + saltstack_bind_interface]['ipv4']['address'] }}"
