@@ -11,7 +11,7 @@ saltstack_group: salt
 
 saltstack_master: "{{ groups[saltstack_group][0] }}"
 
-saltstack_master_configuration: []
+saltstack_master_configuration:
   # # Enable auto_accept. This setting will automatically accept all incoming
   # # public keys from minions.
   # auto_accept: False
@@ -31,13 +31,14 @@ saltstack_master_configuration: []
   #   - dev
   #   - prod
   # extension_modules: /var/cache/salt/master/extmods
+  # file_recv: True
   # # The file server works on environments passed to the master, each environment
   # # can have multiple root directories, the subdirectories in the multiple file
   # # roots cannot match, otherwise the downloaded files will not be able to be
   # # reliably ensured. A base environment is required to house the top file.
-  # file_roots:
-  #   base:
-  #     - /srv/salt/
+  file_roots:
+    base:
+      - "{{ saltstack_master_file_root_base }}"
   #   dev:
   #     - /srv/salt/dev/services
   #     - /srv/salt/dev/states
@@ -69,6 +70,9 @@ saltstack_master_configuration: []
   # outputter_dirs: []
   # # Specify the location of the master pidfile.
   # pidfile: /var/run/salt-master.pid
+  pillar_roots:
+    base:
+      - /srv/pillar
   # # The directory to store the pki authentication keys.
   # pki_dir: /etc/salt/pki/master
   # # The network port to set up the publication interface.
@@ -119,7 +123,11 @@ saltstack_master_configuration: []
   # # worker_threads value.
   # worker_threads: 5
 
-saltstack_minion_configuration: []
+saltstack_master_ip: "{% if inventory_hostname == saltstack_master %}127.0.0.1{% else %}{{ hostvars[saltstack_master]['ansible_' + saltstack_bind_interface]['ipv4']['address'] }}{% endif %}"
+
+saltstack_master_file_root_base: /srv/salt
+
+saltstack_minion_configuration:
   # cachedir: /var/cache/salt/minion
   # conf_file: /etc/salt/minion
   # default_include: minion.d/*.conf
@@ -130,7 +138,7 @@ saltstack_minion_configuration: []
   # master_alive_interval: 30
   # master_port: 4506
   # master_shuffle: False
-  # master: "{{ hostvars[saltstack_master]['ansible_' + saltstack_bind_interface]['ipv4']['address'] }}"
+  master: "{{ saltstack_master_ip }}"
   # pidfile: /var/run/salt-minion.pid
   # pki_dir: /etc/salt/pki/minion
   # # proxy_host:
@@ -148,3 +156,13 @@ saltstack_minion_configuration: []
   # tcp_keepalive: True
   # user: root
   # verify_env: True
+
+saltstack_states: []
+  # nginx:
+  #   pkg:
+  #     - installed
+  #   service.running:
+  #     - watch:
+  #         - pkg: nginx
+  #         - file: /etc/nginx/nginx.conf
+  #         - file: /etc/nginx/sites-available/default
