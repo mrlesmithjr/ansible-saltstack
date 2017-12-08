@@ -1,11 +1,4 @@
 # {{ ansible_managed }}
 {% if saltstack_minion_configuration is defined and saltstack_minion_configuration != [] %}
-{%   for key, value in saltstack_minion_configuration.items()|sort %}
-{%     if value and (value is not iterable or value is string) %}
-{{ key }}: {{ value }}
-{%     elif value is iterable and value is not string and value != [] %}
-{{ key }}:
-  {{ value|to_nice_yaml|indent(width=2) }}
-{%     endif %}
-{%   endfor %}
+{{ saltstack_minion_configuration|to_nice_yaml }}
 {% endif %}
