@@ -5,9 +5,7 @@
 {{ key }}: {{ value }}
 {%     elif value is iterable and value is not string and value != [] %}
 {{ key }}:
-{%       for _value in value %}
-  - {{ _value }}
-{%       endfor %}
+  {{ value|to_nice_yaml|indent(width=2) }}
 {%     endif %}
 {%   endfor %}
 {% endif %}
