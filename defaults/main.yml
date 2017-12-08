@@ -2,7 +2,7 @@
 # defaults file for ansible-saltstack
 saltstack_bind_interface: enp0s8
 
-saltstack_master_configuration:
+saltstack_master_configuration: []
   # # Enable auto_accept. This setting will automatically accept all incoming
   # # public keys from minions.
   # auto_accept: False
@@ -110,7 +110,7 @@ saltstack_master_configuration:
   # # worker_threads value.
   # worker_threads: 5
 
-saltstack_minion_configuration:
+saltstack_minion_configuration: []
   # cachedir: /var/cache/salt/minion
   # conf_file: /etc/salt/minion
   # default_include: minion.d/*.conf
@@ -121,7 +121,7 @@ saltstack_minion_configuration:
   # master_alive_interval: 30
   # master_port: 4506
   # master_shuffle: False
-  master: "{{ hostvars[saltstack_master]['ansible_' + saltstack_bind_interface]['ipv4']['address'] }}"
+  # master: "{{ hostvars[saltstack_master]['ansible_' + saltstack_bind_interface]['ipv4']['address'] }}"
   # pidfile: /var/run/salt-minion.pid
   # pki_dir: /etc/salt/pki/minion
   # # proxy_host:
