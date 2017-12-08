@@ -2,6 +2,15 @@
 # defaults file for ansible-saltstack
 saltstack_bind_interface: enp0s8
 
+saltstack_debian_repo_info:
+  key: "https://repo.saltstack.com/apt/{{ ansible_distribution|lower }}/{{ ansible_distribution_version }}/amd64/latest/SALTSTACK-GPG-KEY.pub"
+  repo: "deb http://repo.saltstack.com/apt/{{ ansible_distribution|lower }}/{{ ansible_distribution_version }}/amd64/latest {{ ansible_distribution_release|lower }} main"
+
+# Defines the Ansible group which contains the Salt nodes
+saltstack_group: salt
+
+saltstack_master: "{{ groups[saltstack_group][0] }}"
+
 saltstack_master_configuration: []
   # # Enable auto_accept. This setting will automatically accept all incoming
   # # public keys from minions.
@@ -139,14 +148,3 @@ saltstack_minion_configuration: []
   # tcp_keepalive: True
   # user: root
   # verify_env: True
-
-saltstack_debian_repo_info:
-  key: "https://repo.saltstack.com/apt/{{ ansible_distribution|lower }}/{{ ansible_distribution_version }}/amd64/latest/SALTSTACK-GPG-KEY.pub"
-  repo: "deb http://repo.saltstack.com/apt/{{ ansible_distribution|lower }}/{{ ansible_distribution_version }}/amd64/latest {{ ansible_distribution_release|lower }} main"
-
-# Defines the Ansible group which contains the Salt nodes
-saltstack_group: salt
-
-saltstack_master: "{{ groups[saltstack_group][0] }}"
-
-saltstack_master_ip: "{{ hostvars[saltstack_master]['ansible_' + saltstack_bind_interface]['ipv4']['address'] }}"
