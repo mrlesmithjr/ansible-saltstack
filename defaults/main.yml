@@ -14,7 +14,7 @@ saltstack_master: "{{ groups[saltstack_group][0] }}"
 saltstack_master_configuration:
   # # Enable auto_accept. This setting will automatically accept all incoming
   # # public keys from minions.
-  # auto_accept: False
+  auto_accept: false
   # # The location used to store cache information, particularly the job
   # # information for executed salt commands.
   # # This directory may contain sensitive data and should be protected accordingly.
@@ -166,3 +166,11 @@ saltstack_states: []
   #         - pkg: nginx
   #         - file: /etc/nginx/nginx.conf
   #         - file: /etc/nginx/sites-available/default
+  # haproxy:
+  #   pkg:
+  #     - installed
+  #   service.running:
+  #     - watch:
+  #       - pkg: haproxy
+  #       - file: /etc/haproxy/haproxy.cfg
+  #       - file: /etc/default/haproxy
