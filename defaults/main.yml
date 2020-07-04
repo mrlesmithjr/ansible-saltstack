@@ -123,7 +123,7 @@ saltstack_master_configuration:
   # # worker_threads value.
   # worker_threads: 5
 
-saltstack_master_ip: "{% if inventory_hostname == saltstack_master %}127.0.0.1{% else %}{{ hostvars[saltstack_master]['ansible_' + saltstack_bind_interface]['ipv4']['address'] }}{% endif %}"
+saltstack_master_ip: "{% if inventory_hostname == saltstack_master %}127.0.0.1{% else %}{% if 'enp0s8' in hostvars[saltstack_master]%}{{ hostvars[saltstack_master]['ansible_' + saltstack_bind_interface]['ipv4']['address'] }}{% else %}{{ hostvars[saltstack_master]['ansible_default_ipv4']['address'] }}{% endif %}{% endif %}"
 
 saltstack_master_file_root_base: /srv/salt
 
