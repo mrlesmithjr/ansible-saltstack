@@ -1,0 +1,7 @@
+---
+- name: Converge
+  hosts: all
+  tasks:
+    - name: Include ansible-saltstack
+      include_role:
+        name: ansible-saltstack
