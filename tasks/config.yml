@@ -3,6 +3,7 @@
   template:
     src: etc/salt/master.j2
     dest: "{{ saltstack_master_configuration['conf_file']|default('/etc/salt/master') }}"
+    mode: u=rw,g=r,o=r
   become: true
   notify: restart salt-master
   when: inventory_hostname == saltstack_master
@@ -11,6 +12,7 @@
   template:
     src: etc/salt/minion.j2
     dest: "{{ saltstack_minion_configuration['conf_file']|default('/etc/salt/minion') }}"
+    mode: u=rw,g=r,o=r
   become: true
   notify: restart salt-minion
   # when: inventory_hostname != saltstack_master
@@ -39,6 +41,7 @@
   file:
     path: "{{ item }}"
     state: directory
+    mode: u=rwx,g=rx,o=rx
   become: true
   with_items: "{{ saltstack_file_roots }}"
   when: >
@@ -49,6 +52,7 @@
   file:
     path: "{{ item }}"
     state: directory
+    mode: u=rwx,g=rx,o=rx
   become: true
   with_items: "{{ saltstack_pillar_roots }}"
   when: >
@@ -59,6 +63,7 @@
   file:
     path: "{{ saltstack_master_file_root_base }}/{{ item }}"
     state: directory
+    mode: u=rwx,g=rx,o=rx
   become: true
   with_items: "{{ saltstack_states }}"
   when: >
@@ -69,6 +74,7 @@
   template:
     src: states/init.sls.j2
     dest: "{{ saltstack_master_file_root_base }}/{{ item }}/init.sls"
+    mode: u=rw,g=r,o=r
   become: true
   with_items: "{{ saltstack_states }}"
   when: >
