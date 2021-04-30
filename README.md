@@ -1,10 +1,21 @@
-# Role Name
+# ansible-saltstack
 
-An [Ansible](https://www.ansible.com) role to install/configure [SaltStack](https://saltstack.com/)
+An Ansible role to install/configure SaltStack
+
+## Build Status
+
+### GitHub Actions
+
+![Molecule Test](https://github.com/mrlesmithjr/ansible-saltstack/workflows/Molecule%20Test/badge.svg)
+
+### Travis CI
+
+[![Build Status](https://travis-ci.org/mrlesmithjr/ansible-saltstack.svg?branch=master)](https://travis-ci.org/mrlesmithjr/ansible-saltstack)
 
 ## Requirements
 
-None
+For any required Ansible roles, review:
+[requirements.yml](requirements.yml)
 
 ## Role Variables
 
@@ -12,42 +23,9 @@ None
 
 ## Dependencies
 
-None
-
-## Example Inventory
-
-```yaml
-all:
-    hosts:
-        example-host:
-            ansible_host: example-host
-            ansible_connection: ssh
-    children:
-        salt:
-            hosts:
-                saltstack_master:
-                    ansible_host: master-host
-                    ansible_connection: ssh
-                    ansible_user: ubuntu
-                saltstack_minion:
-                    ansible_host: minion-host
-                    ansible_connection: ssh
-                    ansible_user: ubuntu
-```
-
 ## Example Playbook
 
-```yaml
-- name: Install SaltStack Master and minions node
-  hosts: salt
-  gather_facts: yes
-  become: yes
-  tags: ['salt']
-
-  roles:
-    - role: ansible-saltstack
-```
-
+[playbook.yml](playbook.yml)
 
 ## License
 
@@ -57,6 +35,8 @@ MIT
 
 Larry Smith Jr.
 
--   [EverythingShouldBeVirtual](http://everythingshouldbevirtual.com)
--   [@mrlesmithjr](https://twitter.com/mrlesmithjr)
--   mrlesmithjr [at] gmail.com
+- [@mrlesmithjr](https://twitter.com/mrlesmithjr)
+- [mrlesmithjr@gmail.com](mailto:mrlesmithjr@gmail.com)
+- [https://everythingshouldbevirtual.com](https://everythingshouldbevirtual.com)
+
+> NOTE: Repo has been created/updated using [https://github.com/mrlesmithjr/cookiecutter-ansible-role](https://github.com/mrlesmithjr/cookiecutter-ansible-role) as a template.

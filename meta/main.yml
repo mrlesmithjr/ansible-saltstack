@@ -1,17 +1,18 @@
+---
 galaxy_info:
   author: Larry Smith Jr.
-  description: An [Ansible](https://www.ansible.com) role to install/configure [SaltStack](https://saltstack.com/)
-
-  license: license (MIT)
-
-  min_ansible_version: 1.2
+  description: An Ansible role to install/configure SaltStack
+  license: MIT
+  min_ansible_version: 2.8
+  namespace: mrlesmithjr
+  role_name: saltstack
 
   platforms:
-    - name: Ubuntu
-      versions:
-        - xenial
-
+  - name: Ubuntu
+    versions:
+    - xenial
   galaxy_tags:
-    - configuration management
+    - system
+    - configuration
 
 dependencies: []

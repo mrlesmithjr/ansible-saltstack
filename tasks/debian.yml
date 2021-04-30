@@ -1,4 +1,10 @@
 ---
+- name: debian | Installing pre-reqs
+  apt:
+    name:
+    - gnupg
+  become: true
+
 - name: debian | Adding Repo Key
   apt_key:
     url: "{{ saltstack_debian_repo_info['key'] }}"
