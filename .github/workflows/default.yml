@@ -1,4 +1,5 @@
 ---
+# ci-verify: throwaway PR to confirm CI runs green on GitHub's amd64 runners
 name: Molecule Test
 on:
   pull_request:
